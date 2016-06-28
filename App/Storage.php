@@ -27,7 +27,7 @@ class Storage {
 	/**
 	 * Changes status of contributor to "assigned" in data array when contributor name is provided
 	 * 
-	 * @param  string $name contributor's name to be changed
+	 * @param  string $name contributor's name to be assigned
 	 * @return boolean                  [description]
 	 */
 	public function assignContributor( $name ) { }
@@ -35,7 +35,7 @@ class Storage {
 	/**
 	 * Changes status of contributor to "unassigned" in data array when contributor name is provided
 	 * 
-	 * @param  string $name 
+	 * @param  string $name  contributor name to be unassigned
 	 * @return boolean       [description]
 	 */
 	public function unassignContributor( $name ) { }
