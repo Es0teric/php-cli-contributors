@@ -6,12 +6,38 @@ class Storage {
 
     public function __construct() { }
 
-	public function storeContributor( $contributorName, $contributorLocation, $contributorStatus ) { }
+    /**
+     * Stores contributor data into data array
+     * 
+     * @param  string $name     contributor name to be stored
+     * @param  string $location location of contributor to be stored
+     * @param  string $status   status of contributor: assigned|unassigned
+     * @return boolean                      [description]
+     */
+	public function storeContributor( $name, $location, $status ) { }
 
-	public function removeContributor( $contributorName ) { }
-	
-	public function assignContributor( $contributorName ) { }
+	/**
+	 * Removes contributor data from data array
+	 * 
+	 * @param  string $name name of contributor to be removed
+	 * @return boolean                  [description]
+	 */
+	public function removeContributor( $name ) { }
 
-	public function unassignContributor( $contributorName ) { }
+	/**
+	 * Changes status of contributor to "assigned" in data array when contributor name is provided
+	 * 
+	 * @param  string $name contributor's name to be changed
+	 * @return boolean                  [description]
+	 */
+	public function assignContributor( $name ) { }
+
+	/**
+	 * Changes status of contributor to "unassigned" in data array when contributor name is provided
+	 * 
+	 * @param  string $name 
+	 * @return boolean       [description]
+	 */
+	public function unassignContributor( $name ) { }
 
 }
