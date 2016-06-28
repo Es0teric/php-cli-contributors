@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<phpunit bootstrap="./vendor/autoload.php" color="true" convertErrorsToExceptions="true" convertWarningsToExceptions="true" stopOnFailures="false">
+	<testsuites>
+		
+		<testsuite name="Global App Tests">
+			<directory>tests/App/</directory>
+		</testsuite>
+
+		<testsuite name="Command Tests">
+			<directory>tests/App/Command/</directory>
+		</testsuite>
+		
+		<testsuite name="Controller Tests">
+			<directory>tests/App/Controllers/</directory>
+		</testsuite>
+
+	</testsuites>
+</phpunit>
