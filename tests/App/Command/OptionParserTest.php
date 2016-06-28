@@ -2,7 +2,12 @@
 
 use App\Helpers;
 
-class OptionParserTest extends PHPUnit_Framework_TestCase {
+/**
+ * Test class for parsing stdin options/arguments after the command
+ * 
+ */
+class OptionParserTest extends PHPUnit_Framework_TestCase 
+{
 
 	public function __construct() {
 
@@ -55,32 +60,60 @@ class OptionParserTest extends PHPUnit_Framework_TestCase {
 		return $input;
 	}
 
+	/**
+	 * Test if single option/argument after command gets parsed
+	 * 
+	 * @return void
+	 */
 	public function test_single_option_gets_parsed() {
 		
 		$singleParaminput = $this->sendInputAddContributorSingleOption();
-		return $this->assertArrayHasKey('name', $this->helper->parseCliInput( $singleParaminput ) );
+		$this->assertArrayHasKey('name', $this->helper->parseCliInput( $singleParaminput ) );
 
 	}
 
+	/**
+	 * Test if multiple options/arguments after command get parsed
+	 * 
+	 * @return void
+	 */
 	public function test_multiple_options_gets_parsed() {
 
 		$multipleParamInput = $this->sendInputAddContributorMultipleOptions();
-		return $this->assertArrayHasKey( 'location', $this->helper->parseCliInput( $multipleParamInput ) );
+		$this->assertArrayHasKey( 'location', $this->helper->parseCliInput( $multipleParamInput ) );
 
 	}
 
+	/**
+	 * Test if explode works on initial command to seperate it from options/arguments
+	 * 
+	 * @return void
+	 */
 	public function test_explode_input_single_options() {
 		
 		$explodedArray = explode( " ", $this->sendInputAddContributorSingleOption() );
-		return $this->assertTrue( is_array( $explodedArray ) );
+		$this->assertTrue( is_array( $explodedArray ) );
 
 	}
 
+	/**
+	 * Test if single option/argument after command gets parsed and array is not null as well as strings get quotes stripped
+	 * 
+	 * @return void
+	 */
 	public function test_single_option_array_not_null() {
 
-		return $this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorSingleOption() ) ) );
+		$this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorSingleOption() ) ) );
 	
 	}
 
+	/**
+	 * Test if multiple options/arguments after command gets parsed and array is not null as well as strings get quotes stripped
+	 * 
+	 * @return void
+	 */	
+	public function test_multiple_option_array_not_null() {
+		$this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorMultipleOptions() ) ) );
+	}
 
 }
