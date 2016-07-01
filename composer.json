@@ -12,5 +12,8 @@
     		"App\\Command\\": "App/Command",
     		"App\\Controllers\\": "App/Controllers"
     	}
-    }
+    },
+	"require": {
+		"fzaninotto/faker": "^1.6"
+	}
 }

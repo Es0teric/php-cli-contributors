@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'App\\Controllers\\' => array($baseDir . '/App/Controllers'),
     'App\\Command\\' => array($baseDir . '/App/Command'),
     'App\\' => array($baseDir . '/App'),

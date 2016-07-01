@@ -1,16 +1,24 @@
 <?php namespace App;
 
-use Controllers\AddController;
-use App\Command\AddContributorCommand;
+use App\Controllers\SessionController;
+use App\Command\AddContributorCommand as AddContributor;
+use App\Command\ShowAllContributorsCommand as ShowAllContributors;
+
 
 class Router {
 
     public function __construct() {
+
         //$this->routes[] = AddController::class;
         //$this->route = new AddController();
         //$this->route[] = AddController::class;
-        $this->addContributorCommand = new AddContributorCommand;
+        $this->addContributor = new AddContributor();
+        $this->showAllContributors = new ShowAllContributors();
         
+    }
+
+    public function run( $input ) {
+        $this->handle( $input );
     }
 
     public function handle( $input ) {
@@ -20,14 +28,18 @@ class Router {
 
         //lets check for the add_contributor command
         if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'add_contributor' )
-            $this->addContributorCommand->run( trim( $input ) );
+            $this->addContributor->run( trim( $input ) );
 
-        //var_dump($this->route);
+        //lets check for the show_all command
+        if( trim( $input ) == 'show_all' )
+            $this->showAllContributors->run( trim( $input ) );
 
-        //parse out controller,
-        $request = $this->parseRequest($input);
-        //$this->route->run($this->request);
-        
+        elseif( $explodedInput[0] == 'show_all' )
+            $this->showAllContributors->run( $explodedInput );
+
+
+        //parse out controller
+        //$this->parseRequest($input)
     }
 
     public function parseRequest($input) {
@@ -35,4 +47,5 @@ class Router {
         //$this->routes;
         //$this->request = new Request(); //parse out data that is not controller
     }
+
 }

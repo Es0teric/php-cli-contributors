@@ -14,7 +14,10 @@ class AddContributorCommand
 	public function __construct() {
 
 		//instantiate helpers class
-		$this->helper = new Helpers;
+		$this->helper = new Helpers();
+
+		//init storage
+		$this->storage = new Storage();
 
 	}
 
@@ -22,11 +25,37 @@ class AddContributorCommand
 		$this->handle( $input );
 	}
 
+	/**
+	 * Handles adding contributor data
+	 * 
+	 * @param  string $input user input from STDIN
+	 * 
+	 * @return void
+	 */
 	public function handle( $input ) {
 
+		//first, lets parse output from STDIN
 		$params = $this->helper->parseCliInput( $input );
-		var_dump( $params );
+
+		//then lets assign vars to contain each individual var from parsed input
+		if( array_key_exists( 'name', $params ) )
+			$name = $params['name'];
+		else
+			$name = false;
+
+		if( array_key_exists( 'location', $params ) )
+			$location = $params['location'];
+		else
+			$location = false;
+
+		if( array_key_exists( 'status', $params ) )
+			$status = $params['status'];
+		else
+			$status = false;
 		
+		//lets check contributor data for duplicates before storing
+		$this->storage->checkContributor( $name, $location, $status );
+
 	}
 
 }
