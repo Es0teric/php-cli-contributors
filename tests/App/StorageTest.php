@@ -77,9 +77,11 @@ class StorageTest extends PHPUnit_Framework_TestCase
 				$status = false;
 
 			//store add_contributor input data
-			$this->storage->checkContributor( $name, $location, $status );
+			$contributor = $this->storage->storeContributor( $name, $location, $status );
 
 		}
+
+
 
 		//now we check the the size of the array to make sure the data saved
 		$this->assertGreaterThan( 0, sizeof( $this->storage->listContributors() ) );
@@ -88,9 +90,9 @@ class StorageTest extends PHPUnit_Framework_TestCase
 
 	public function test_datajson_was_created() {
 
-		$data = $this->helper->parseCliInput( $this->sendInputAddContributor() );
+		//$data = $this->helper->parseCliInput( $this->sendInputAddContributor() );
 
-		file_put_contents( './App/data.json', json_encode( $data ) );
+		file_put_contents( './App/data.json', []);
 
 		$this->assertFileExists( './App/data.json' );
 

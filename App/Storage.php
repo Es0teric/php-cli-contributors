@@ -7,17 +7,17 @@
  */
 
 use App\Helpers;
+use App\Output\Output;
 
 class Storage {
 	
-    protected $data;
-    public $appDir;
+    protected $data = [];
+    public $file = [];
 
     public function __construct() {
 
-    	$this->data = [];
     	$this->helper = new Helpers();
-    	$this->appDir = './App/';
+    	$this->output = new Output();
 
     }
 
@@ -28,32 +28,58 @@ class Storage {
      * @param  string $location location of contributor to be stored
      * @param  string $status   status of contributor: assigned|unassigned
      * 
-     * @return array  $data     stored data to return
+     * @return array  $merged     merged data to return
      */
 	public function storeContributor( $name, $location, $status ) {
 
-		$this->data[] = [
+		//retrieve current data array from json file
+		$file = $this->readDataFile();
+
+		//store current input into this array
+		$original[] = [
 			'name' => $name,
 			'location' => $location,
 			'status' => $status
 		];
 
-		//$uniqueArray = array_unique( $this->data, SORT_REGULAR );
+		//lets check if the data.json file is empty
+		if( !empty( $file ) ) {
 
-		$currentData = $this->readDataFile();
+			//now we loop through each array to make sure that there is no duplicate data being added
+			foreach( $file as $key => $item ) {
 
-		if( !empty( $currentData ) ) {
+				//check against the name of the array list and the name thats being passed in
+				if( $item['name'] == $name ) {
 
-			$merge = array_merge( $this->data, $currentData );
-			$this->writeDataToFile( $merge );
-			return $merge;
+					//store duplicate array key index inside of this var
+					$dupeArrayIndexes[] = $key;
+					$this->output->error('Uh oh, the contributor ' . $item['name'] . ' already exists!');
+				
+				} else {
+
+					//this is the array that we will save
+					$cleanedArray[] = $item;
+				
+				}
+
+			}
+
+			//merge the original array with current STDIN data with the clean array that contains no duplicates
+			$merged = array_merge( $cleanedArray, $original );
+
+			//lets write to the data file
+			$this->writeDataToFile( $merged );
+
+			//return the merged data
+			return $merged;
 
 		} else {
 
-			$this->writeDataToFile( $this->data );
-			return $this->data;
-
+			//we are going to be writing new data now
+			$this->writeDataToFile( $original);
+			return $original;
 		}
+
 
 	}
 
@@ -66,14 +92,20 @@ class Storage {
 
 		if( !empty( $data ) ) {
 
-				
+			//store initial data array
+			$fileData = $data;
+
+			//lets pop the last item in the array so we can notify the user what was saved
+			$lastItem = array_pop( $data );
+
 			//lets save the data into the json file
-			file_put_contents( __DIR__ . '/data.json', json_encode( $data ) );
+			$fileSave = file_put_contents( __DIR__ . '/data.json', json_encode( $fileData ) );
 			
-			//lets now loop through the list of new contributors that were added and notify the user
-			/*foreach( $this->data as $item ) {
-				$this->helper->info("Contributor " . $item['name'] . " added!");
-			}*/
+			//lets check if the file saves correctly before outputting a success message
+			if( $fileSave === false ) 
+				$this->output->error( 'Uh oh!! The file failed to save.. please check file permissions' );
+			else
+				$this->output->info("-- contributor " . $lastItem['name'] . " added!");
 			
 
 		}
@@ -107,7 +139,7 @@ class Storage {
 
 		} else {
 
-			//$this->helper->error('Uh oh! It seems that the data file doesnt exist, creating it now...');
+			//$this->output->error('Uh oh! It seems that the data file doesnt exist, creating it now...');
 			file_put_contents( __DIR__ . '/data.json' , []);
 
 		}
@@ -125,47 +157,6 @@ class Storage {
 
 		return $data;
 	
-	}
-
-	/**
-	 * Checks current contributor array for any existing data
-	 * 
-	 * @param  string $name     contributor name to be checked
-	 * @param  string $location contributor location
-	 * @param  string $status   contributor status
-	 * 
-	 * @return void
-	 */
-	public function checkContributor( $name, $location, $status ) {
-
-		$original = [
-			'name' => $name,
-			'location' => $location,
-			'status' => $status
-		];
-
-		$existingData = $this->readDataFile();
-
-		if( empty( $existingData ) || !file_exists( __DIR__ . '/data.json' ) ) {
-
-			$this->storeContributor( $original['name'], $original['location'], $original['status'] );
-
-		} else {
-
-			//lets loop through the list of items to make sure there are no duplicates before inserting new data
-			foreach( $existingData as $item ) {
-
-				if( $item['name'] == $original['name'] )
-					$this->helper->error('Uh oh, the contributor ' . $item['name'] . ' already exists!');
-				else
-					$this->storeContributor( $original['name'], $original['location'], $original['status'] );
-					
-
-			}
-
-
-		}
-
 	}
 
 	/**
@@ -194,7 +185,7 @@ class Storage {
 		if( !empty( $data ) || file_exists( __DIR__ . '/data.json' ) )
 			return $data;
 		else
-			$this->helper->error('Oh no... Either the file doesnt exist or it exists, but its empty');
+			$this->output->error('Oh no... Either the file doesnt exist or it exists, but its empty');
 
 	}
 

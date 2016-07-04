@@ -54,7 +54,7 @@ class AddContributorCommand
 			$status = false;
 		
 		//lets check contributor data for duplicates before storing
-		$this->storage->checkContributor( $name, $location, $status );
+		$this->storage->storeContributor( $name, $location, $status );
 
 	}
 

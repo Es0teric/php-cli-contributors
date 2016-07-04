@@ -15,7 +15,7 @@ class Helpers
 		preg_match_all('/--(?P<opt>.*?)=(?P<value>".*?")/', $input, $m);
 
 		//parse input for multiple array key values
-		if( is_array( $m['opt'] ) ) {
+		if( is_array( $m['opt'] ) && !empty( $m['opt'] ) ) {
 			
 			$arr = [];
 
@@ -28,6 +28,43 @@ class Helpers
 
 			//combine cleaned array strings and merge array key/values together
 			return array_combine( $m['opt'] , $arr['value'] );
+
+		} else {
+
+			$items = explode( '", "', str_replace('add_contributor ','', trim( $input,'"' ) ) );
+
+			//lets check if the user is passing in params through input
+			if( !empty( $items ) ) {
+
+				//loop through each item in the explode to strop quotes
+				foreach( $items as $item ) {
+					$newArray[] = $this->stripQuotes( $item ); 
+				}
+
+				//manually assign each individual key to each var
+				if( array_key_exists( '0', $newArray ) )
+					$name = $newArray[0];
+				else
+					$name = false;
+
+				if( array_key_exists( '1', $newArray ) )
+					$location = $newArray[1];
+				else
+					$location = false;
+
+				if( array_key_exists( '2' , $newArray ) )
+					$status = $newArray[2];
+				else
+					$status = false;
+
+				//return array with appropriate key/values
+				return [ 
+					'name' => $name, 
+					'location' => $location, 
+					'status' => $status 
+				];
+
+			}
 
 		}
 
@@ -45,26 +82,6 @@ class Helpers
 		//return stripped quotes from string
 		return str_replace(['"', "'"], '', $value);
 
-	}
-
-	/**
-	 * Outputs Red error text onto the terminal
-	 * 
-	 * @param  string $text text to output on the terminal
-	 * @return string       formatted text to output in the terminal
-	 */
-	public function error( $text ) {
-		print "\r\n\033[1;31m $text \033[0m\n";
-	}
-
-	/**
-	 * Outputs green info text onto the terminal
-	 * 
-	 * @param  string $text text to output on the terminal
-	 * @return string       formatted text to output in the terminal
-	 */
-	public function info( $text ) {
-		print "\r\n\033[0;32m $text \033[0m\n";
 	}
 
 }

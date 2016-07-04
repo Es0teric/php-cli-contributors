@@ -51,5 +51,6 @@ class Application {
         $this->router->handle(trim($input));
     }
 }
+
 $app = new Application;
 $app->run();

@@ -3,15 +3,17 @@
 
 use App\Application;
 
-class Contributors {
+class Contributors 
+{
 
     public function init() {
         
         //lets init the application and begin
-        $app = new Application->run();
+        $app = new Application();
+        $app->run();
 
     }
 
 }
-$contributors = new Contributors;
+$contributors = new Contributors();
 $contributors->init();

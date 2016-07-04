@@ -28,14 +28,22 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	public function sendInputForExplodeSingleParam() {
+
+		$input = 'add_contributor "John Wall"';
+		return $input;
+
+	}
+
 	/**
 	 * Handles input for multiple params with double quotes
 	 * @return string $input input to be typed on the command line
 	 */
 	public function sendInputAddContributorMultipleOptions() {
-		$input = 'add_contributor --name="John Wall" --location="Seattle, Washington" --status="unassigned"';
 
+		$input = 'add_contributor --name="John Wall" --location="Seattle, Washington" --status="unassigned"';
 		return $input;
+		
 	}
 
 	/**
@@ -114,6 +122,13 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	 */	
 	public function test_multiple_option_array_not_null() {
 		$this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorMultipleOptions() ) ) );
+	}
+
+	public function test_parser_without_long_params() {
+
+		$output = $this->helper->parseCliInput( $this->sendInputForExplodeSingleParam() );
+		$this->assertTrue( is_array( $output ) );
+
 	}
 
 }

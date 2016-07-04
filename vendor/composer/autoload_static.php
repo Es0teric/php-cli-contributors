@@ -17,6 +17,7 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         ),
         'A' => 
         array (
+            'App\\Output\\' => 11,
             'App\\Controllers\\' => 16,
             'App\\Command\\' => 12,
             'App\\' => 4,
@@ -31,6 +32,10 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
+        'App\\Output\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/App/Output',
         ),
         'App\\Controllers\\' => 
         array (

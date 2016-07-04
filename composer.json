@@ -10,7 +10,8 @@
     	"psr-4":  {
     		"App\\": "App/",
     		"App\\Command\\": "App/Command",
-    		"App\\Controllers\\": "App/Controllers"
+    		"App\\Controllers\\": "App/Controllers",
+            "App\\Output\\" : "App/Output"
     	}
     },
 	"require": {

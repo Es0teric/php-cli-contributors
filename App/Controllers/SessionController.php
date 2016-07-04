@@ -2,7 +2,8 @@
 
 use App\Storage;
 
-class SessionController {
+class SessionController 
+{
 
 	public function __construct() {
 		
@@ -19,7 +20,6 @@ class SessionController {
     public function destroy() {
 
     	$this->storage->removeDataFile();
-    	return false;
 
     }
 }
