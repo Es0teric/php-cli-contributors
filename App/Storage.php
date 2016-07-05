@@ -86,9 +86,11 @@ class Storage {
 	/**
 	 * Writes current data in terminal session to json file
 	 * 
+	 * @param  array 	$data   data to save
+	 * @param  boolean  $update if false, the user is not removing an array key to update the data
 	 * @return void
 	 */
-	public function writeDataToFile( $data ) {
+	public function writeDataToFile( $data, $update = false ) {
 
 		if( !empty( $data ) ) {
 
@@ -104,7 +106,7 @@ class Storage {
 			//lets check if the file saves correctly before outputting a success message
 			if( $fileSave === false ) 
 				$this->output->error( 'Uh oh!! The file failed to save.. please check file permissions' );
-			else
+			elseif( $update === false )
 				$this->output->info("-- contributor " . $lastItem['name'] . " added!");
 			
 
@@ -178,7 +180,7 @@ class Storage {
 
 		} else {
 
-			$this->output->error('Oh no... Either the file doesnt exist or it exists, but its empty');
+			$this->output->error('Oh no... there are no contributors to show yet... go ahead and add some');
 			
 		}
 
@@ -203,7 +205,7 @@ class Storage {
 			$contributor = $file[$index];
 			
 			unset( $file[$index] );
-			$this->writeDataToFile( $file );
+			$this->writeDataToFile( $file, true );
 			$this->output->info( '-- Contributor ' . $contributor['name'] . ' was removed!' );
 
 		} else {
