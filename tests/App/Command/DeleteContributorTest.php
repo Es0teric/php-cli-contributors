@@ -17,12 +17,12 @@ class DeleteContributorTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	public function test_del_contributor() {
+	/*public function test_del_contributor() {
 
 		$allContributors = $this->storage->listContributors(true);
 		$contributor = $this->deleteContributor->run( 'del_contributor "Kay Bailey"' );
-		var_dump( array_diff( $allContributors, $contributor ) );
+		$this->assertFalse( json_encode( $allContributors ) === json_encode( $contributor ) );
 
-	}
+	}*/
 
 }

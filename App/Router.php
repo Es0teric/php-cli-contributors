@@ -52,7 +52,13 @@ class Router {
         if( array_key_exists( '0', $explodedInput ) )
             $this->showByLocation->run( trim( $input ) );
         else
-            $this->output->error( '-- Please insert a location to search by' );
+            $this->output->error( '-- Please insert a contributor with location to search by' );
+
+        //lets check the show_by_status command
+        if( array_key_exists( '0', $explodedInput ) )
+            $this->showByStatus->run( trim( $input ) );
+        else
+            $this->output->error( '-- Please insert a contributor with status to search by ' );
         
     }
 
