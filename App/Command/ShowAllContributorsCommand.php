@@ -13,7 +13,7 @@ class ShowAllContributorsCommand {
 
 	public function __construct() {
 
-		$this->helpers = new Helpers();
+		$this->helper = new Helpers();
 		$this->storage = new Storage();
 		$this->output = new Output();
 
@@ -65,7 +65,7 @@ class ShowAllContributorsCommand {
 							//outputs user info into terminal
 							foreach( $contributors as $item ) {
 
-								$this->helper->info( '-- ' . $item['name'] . ' (' . $item['location'] . ', ' . $item['status'] . ')' );
+								$this->output->info( '-- ' . $item['name'] . ' (' . $item['location'] . ', ' . $item['status'] . ')' );
 
 							}
 

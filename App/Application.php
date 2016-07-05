@@ -8,7 +8,7 @@ use App\Router;
 
 class Application {
 
-    public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\n";
+    public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\r\n";
     public $open = true;
 
     public function __construct() {

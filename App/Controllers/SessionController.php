@@ -23,6 +23,7 @@ class SessionController
 	 */
     public function destroy() {
 
+    	$this->output->info('-- Goodbye!');
     	$this->storage->removeDataFile();
 
     }

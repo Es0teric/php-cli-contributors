@@ -3,9 +3,11 @@
 use App\Helpers;
 use App\Storage;
 use Faker\Factory as Faker;
+use App\Command\AddContributorCommand as AddContributor;
 
 class StorageTest extends PHPUnit_Framework_TestCase 
 {
+
 
 	public function __construct() {
 
@@ -17,6 +19,9 @@ class StorageTest extends PHPUnit_Framework_TestCase
 
 		//we will use this to mimic user input
 		$this->faker = Faker::create();
+
+		//lets init the addContributor object
+		$this->addContributor = new AddContributor();
 
 	}
 
@@ -50,16 +55,16 @@ class StorageTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests contributor data storage
+	 * Tests contributor data storage also serves as test data insert
 	 * 
 	 * @return void
 	 */
-	/*public function test_storage_store_contributor() {
+	public function test_storage_store_contributor() {
 
 		//loop through add contributor input
 		foreach( $this->sendInputAddContributorUsingArray() as $input ) {
 
-			$paramArray = $this->helper->parseCliInput( $input );
+			$paramArray = $this->addContributor->parse( $input );
 
 			if( array_key_exists( 'name', $paramArray ) )
 				$name = $paramArray['name'];
@@ -82,10 +87,8 @@ class StorageTest extends PHPUnit_Framework_TestCase
 		}
 
 		//now we check the the size of the array to make sure the data saved
-		$this->assertGreaterThan( 1, sizeof( $this->storage->listContributors(true) ) );
+		$this->assertGreaterThan( 1, sizeof( $this->storage->listContributors( true ) ) );
 
-	}*/
-
-
+	}
 
 }

@@ -147,31 +147,6 @@ class Storage {
 	}
 
 	/**
-	 * Gets data array and returns it
-	 * 
-	 * @return array $data array of data that was created from storeContributor()
-	 */
-	public function getData() {
-
-		$data = $this->readDataFile();
-
-		return $data;
-	
-	}
-
-	/**
-	 * Clears data array from current memory until user restarts the script
-	 * 
-	 * @return array $data empty array
-	 */
-	public function clearData() {
-
-		return $this->data = [];
-
-	}
-
-
-	/**
 	 * Returns list of contributors from data array
 	 * 
 	 * @param  boolean 	$returnArray  returns array list representation and not terminal output if true for unit testing
@@ -211,12 +186,34 @@ class Storage {
 
 
 	/**
-	 * Removes contributor data from data array
+	 * Removes contributor from data array
 	 * 
-	 * @param  string $name name of contributor to be removed
-	 * @return boolean                  [description]
+	 * @param  int $index index key of the array belonging to the contributor to be removed
+	 * @return void
 	 */
-	public function removeContributor( $name ) { }
+	public function removeContributor( $index ) {
+
+		//we need to grab the list of contributors that exist again
+		$file = $this->listContributors(true);
+
+		//then we check against the index to make sure that the contributor does infact, exist
+		if( array_key_exists( $index , $file ) ) {
+
+			//we then store the array inside of this so we can prompt the user that it was infact removed
+			$contributor = $file[$index];
+			
+			unset( $file[$index] );
+			$this->writeDataToFile( $file );
+			$this->output->info( '-- Contributor ' . $contributor['name'] . ' was removed!' );
+
+		} else {
+
+			$this->output->error('-- This contributor was already removed.');
+
+		}
+
+
+	}
 
 	/**
 	 * Changes status of contributor to "assigned" in data array when contributor name is provided

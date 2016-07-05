@@ -35,7 +35,7 @@ class AddContributorCommand
 	public function handle( $input ) {
 
 		//first, lets parse output from STDIN
-		$params = $this->helper->parseCliInput( $input );
+		$params = $this->parse( $input );
 
 		//then lets assign vars to contain each individual var from parsed input
 		if( array_key_exists( 'name', $params ) )
@@ -56,6 +56,12 @@ class AddContributorCommand
 		
 		//lets check contributor data for duplicates before storing
 		$this->storage->storeContributor( $name, $location, $status );
+
+	}
+
+	public function parse( $input ) {
+
+		return $this->helper->parseForStorage( $input );
 
 	}
 

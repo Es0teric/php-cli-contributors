@@ -4,12 +4,12 @@ class Helpers
 {
 
 	/**
-	 * Parses CLI input from command params by stripping quotes in values and assigning them to a single array 
+	 * Parses CLI input from command params by stripping quotes in values and assigning them to a single array for storage 
 	 * 
 	 * @param  string $input user input from stdin
 	 * @return array         parsed input with values that have stripped inner quotes
 	 */
-	public function parseCliInput( $input ) {
+	public function parseForStorage( $input ) {
 
 		//regex to parse input for params
 		preg_match_all('/--(?P<opt>.*?)=(?P<value>".*?")/', $input, $m);
@@ -47,15 +47,17 @@ class Helpers
 				else
 					$name = false;
 
+				//defaults to "not provided" when not specified
 				if( array_key_exists( '1', $newArray ) )
 					$location = $newArray[1];
 				else
-					$location = false;
+					$location = 'Not Provided';
 
+				//defaults to unassigned when not specified
 				if( array_key_exists( '2' , $newArray ) )
 					$status = $newArray[2];
 				else
-					$status = false;
+					$status = 'unassigned';
 
 				//return array with appropriate key/values
 				return [ 
@@ -68,6 +70,14 @@ class Helpers
 
 		}
 
+	}
+
+	public function parseForRemoval( $input ) {
+		
+		$item = explode( '", "', str_replace('del_contributor "','', trim( $input,'"' ) ) );
+		
+		if( array_key_exists( '0', $item ) )
+			return [ 'name' => $item[0] ];
 
 	}
 

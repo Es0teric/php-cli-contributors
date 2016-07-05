@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers;
+use App\Command\AddContributorCommand as AddContributor;
 
 /**
  * Test class for parsing stdin options/arguments after the command
@@ -12,7 +13,9 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	public function __construct() {
 
 		//lets instantiate the helper class for CLI parsing
-		$this->helper = new Helpers;
+		$this->helper = new Helpers();
+
+		$this->addContributor = new AddContributor();
 
 	}
 
@@ -76,7 +79,7 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	public function test_single_option_gets_parsed() {
 		
 		$singleParaminput = $this->sendInputAddContributorSingleOption();
-		$this->assertArrayHasKey('name', $this->helper->parseCliInput( $singleParaminput ) );
+		$this->assertArrayHasKey('name', $this->addContributor->parse( $singleParaminput ) );
 
 	}
 
@@ -88,7 +91,7 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	public function test_multiple_options_gets_parsed() {
 
 		$multipleParamInput = $this->sendInputAddContributorMultipleOptions();
-		$this->assertArrayHasKey( 'location', $this->helper->parseCliInput( $multipleParamInput ) );
+		$this->assertArrayHasKey( 'location', $this->addContributor->parse( $multipleParamInput ) );
 
 	}
 
@@ -111,7 +114,7 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function test_single_option_array_not_null() {
 
-		$this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorSingleOption() ) ) );
+		$this->assertFalse( empty( $this->addContributor->parse( $this->sendInputAddContributorSingleOption() ) ) );
 	
 	}
 
@@ -121,12 +124,12 @@ class OptionParserTest extends PHPUnit_Framework_TestCase
 	 * @return void
 	 */	
 	public function test_multiple_option_array_not_null() {
-		$this->assertFalse( empty( $this->helper->parseCliInput( $this->sendInputAddContributorMultipleOptions() ) ) );
+		$this->assertFalse( empty( $this->addContributor->parse( $this->sendInputAddContributorMultipleOptions() ) ) );
 	}
 
 	public function test_parser_without_long_params() {
 
-		$output = $this->helper->parseCliInput( $this->sendInputForExplodeSingleParam() );
+		$output = $this->addContributor->parse( $this->sendInputForExplodeSingleParam() );
 		$this->assertTrue( is_array( $output ) );
 
 	}

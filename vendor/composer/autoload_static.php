@@ -51,6 +51,16 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'o' => 
+        array (
+            'org\\bovigo\\vfs\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/mikey179/vfsStream/src/main/php',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
@@ -405,6 +415,7 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$classMap;
 
         }, null, ClassLoader::class);
