@@ -30,12 +30,15 @@ class ShowAllContributorsCommand {
 	 * @param  boolean $sortCheck 	 if true, unit testing is running
 	 * @return array   $contributors returns when unit test needs a list of arrays instead of terminal output
 	 */
-	public function handle( $input, $sortCheck = false ) {
+	protected function handle( $input, $sortCheck = false ) {
 
 		/**
 		 * @todo: sort_location should sort locations by alphabetical order
 		 * @todo: sort_status should sort all assigned users first then unassigned users
 		 */
+		
+		//lets save the initial list of contributors
+		$contributors = $this->storage->listContributors( true );
 
 		//lets check if the user is not sending extra params for sorting
 		if( count( $input ) == 1 ) {
@@ -49,9 +52,6 @@ class ShowAllContributorsCommand {
 
 				//alphabetical sorting
 				case "sort_alpha" :
-
-					//lets save the initial list of contributors
-					$contributors = $this->storage->listContributors( true );
 
 					//sort the contributors array
 					$alphaSort = asort( $contributors );
@@ -78,6 +78,12 @@ class ShowAllContributorsCommand {
 
 					}
 
+				break;
+
+				case "sort_location":
+
+					//usort()
+				
 				break;
 
 			}

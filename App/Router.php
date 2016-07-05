@@ -5,6 +5,8 @@ use App\Command\AddContributorCommand as AddContributor;
 use App\Command\ShowAllContributorsCommand as ShowAllContributors;
 use App\Command\DeleteContributorCommand as DeleteContributor;
 use App\Command\ShowByLocationCommand as ShowByLocation;
+use App\Command\ShowByStatusCommand as ShowByStatus;
+use App\Command\AssignContributorCommand as AssignContributor;
 use App\Output\Output;
 
 
@@ -17,6 +19,8 @@ class Router {
         $this->showAllContributors = new ShowAllContributors();
         $this->deleteContributor = new DeleteContributor();
         $this->showByLocation = new ShowByLocation();
+        $this->showByStatus = new ShowByStatus();
+        $this->assignContributor = new AssignContributor();
 
     }
 
@@ -24,16 +28,14 @@ class Router {
         $this->handle( $input );
     }
 
-    public function handle( $input ) {
+    protected function handle( $input ) {
 
         //lets explode the input from stdin to extract the base command
         $explodedInput = explode( " ", trim( $input ) );
 
         //lets check for the add_contributor command
-        if( array_key_exists( '0', $explodedInput ) )
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'add_contributor' )
             $this->addContributor->run( trim( $input ) );
-        else
-            $this->output->error( '-- Please insert a contributor to add' );
 
         //lets check for the show_all command
         if( trim( $input ) == 'show_all' )
@@ -43,22 +45,20 @@ class Router {
             $this->showAllContributors->run( $explodedInput );
 
         //lets check for the del_contributor command
-        if( array_key_exists( '0', $explodedInput ) )
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'del_contributor' )
             $this->deleteContributor->run( trim( $input ) );
-        else
-            $this->output->error( '-- Please insert a contributor to remove' );
 
         //lets check for the show_by_location command
-        if( array_key_exists( '0', $explodedInput ) )
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'show_by_location' )
             $this->showByLocation->run( trim( $input ) );
-        else
-            $this->output->error( '-- Please insert a contributor with location to search by' );
 
         //lets check the show_by_status command
-        if( array_key_exists( '0', $explodedInput ) )
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'show_by_status' )
             $this->showByStatus->run( trim( $input ) );
-        else
-            $this->output->error( '-- Please insert a contributor with status to search by ' );
+
+        //lets check for the assign_contributor command
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'assign_contributor' )
+            $this->assignContributor->run( trim( $input ) );
         
     }
 

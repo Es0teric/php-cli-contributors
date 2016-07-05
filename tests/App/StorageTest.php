@@ -40,7 +40,13 @@ class StorageTest extends PHPUnit_Framework_TestCase
 			'add_contributor --name="' . $this->faker->name . '" --location="' . $this->faker->state . '" --status="assigned"',
 			'add_contributor --name="' . $this->faker->name . '" --location="' . $this->faker->state . '" --status="assigned"',
 			'add_contributor --name="' . $this->faker->name . '" --location="' . $this->faker->state . '" --status="assigned"',
-			'add_contributor --name="' . $this->faker->name . '" --location="' . $this->faker->state . '" --status="assigned"'
+			'add_contributor --name="' . $this->faker->name . '" --location="' . $this->faker->state . '" --status="assigned"',
+			'add_contributor --name="Jay Dee" --location="Detroit" --status="assigned"',
+			'add_contributor --name="Illa J" --location="Detroit" --status="unassigned"',
+			'add_contributor "Madlib", "California", "unassigned"',
+			'add_contributor "Nas", "New York", "unassigned"',
+			'add_contributor "Kanye West", "Chicago", "unassigned"',
+			'add_contributor "Common", "Chicago", "unassigned"'
 		];
 
 		return $input;
@@ -59,7 +65,7 @@ class StorageTest extends PHPUnit_Framework_TestCase
 	 * 
 	 * @return void
 	 */
-	/*public function test_storage_store_contributor() {
+	public function test_storage_store_contributor() {
 
 		//loop through add contributor input
 		foreach( $this->sendInputAddContributorUsingArray() as $input ) {
@@ -89,6 +95,6 @@ class StorageTest extends PHPUnit_Framework_TestCase
 		//now we check the the size of the array to make sure the data saved
 		$this->assertGreaterThan( 1, sizeof( $this->storage->listContributors( true ) ) );
 
-	}*/
+	}
 
 }

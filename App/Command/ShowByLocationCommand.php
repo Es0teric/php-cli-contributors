@@ -24,25 +24,34 @@ class ShowByLocationCommand
 		$this->handle( $input );
 	}
 
-	public function handle( $input ) {
+	protected function handle( $input ) {
 
 		$contributors = $this->storage->listContributors(true);
 		$parsed = $this->parse( $input );
 
+		//lets check if contributors array is empty
 		if( !empty( $contributors ) ) {
 
 			$foundLocations = [];
 
+			//lets loop through that list of contributors to get matching results of locations
 			foreach( $contributors as $key => $contributor ) {
 
 				if( $contributor['location'] == $parsed['location'] ) {
 
+					//lets store the locations that were found in this array in case we want to return it
 					$foundLocations[] = $contributor;
+
+					//output for found contributors matching the location
 					$this->output->info( '-- ' . $contributor['name'] . ' (' . $contributor['status'] . ')' );
 				
 				}
 
 			}
+
+			//nothing was found
+			if( empty( $foundLocations ) )
+				$this->output->error( '-- There are no contributors with the location of ' . $parsed['location'] );
 
 		} else {
 
@@ -52,7 +61,12 @@ class ShowByLocationCommand
 
 	}
 
-
+	/**
+	 * Parses input from STDIN to a reable array
+	 * 
+	 * @param  array $input  initial input array from STDIN
+	 * @return array         array containing parsed location
+	 */
 	public function parse( $input ) {
 		
 		$item = explode( '", "', str_replace('show_by_location "','', trim( $input,'"' ) ) );

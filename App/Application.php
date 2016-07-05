@@ -8,7 +8,7 @@ use App\Router;
 
 class Application {
 
-    public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\r\n";
+    public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\r\n\r\n";
     public $open = true;
 
     public function __construct() {
@@ -19,7 +19,6 @@ class Application {
         //lets init the session controller to allow the user to quit the script
         $this->session = new SessionController();
 
-        // set routes here or hardcode on 
     }
 
     public function run() {
@@ -50,7 +49,7 @@ class Application {
     }
 
     public function handle($input) {
-        $this->router->handle(trim($input));
+        $this->router->handle( trim( $input ) );
     }
 }
 

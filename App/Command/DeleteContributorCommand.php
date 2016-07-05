@@ -31,7 +31,7 @@ class DeleteContributorCommand
 	 * @param  boolean $sortCheck 	 if true, unit testing is running
 	 * @return array   $contributors returns when unit test needs a list of arrays instead of terminal output
 	 */
-	public function handle( $input ) {
+	protected function handle( $input ) {
 
 		//lets parse the input first
 		$parsedInput = $this->parse( $input );

@@ -32,7 +32,7 @@ class AddContributorCommand
 	 * 
 	 * @return void
 	 */
-	public function handle( $input ) {
+	protected function handle( $input ) {
 
 		//first, lets parse output from STDIN
 		$params = $this->parse( $input );
@@ -43,6 +43,7 @@ class AddContributorCommand
 		else
 			$name = false;
 
+		//defaults to not provided if its not specified
 		if( array_key_exists( 'location', $params ) )
 			$location = $params['location'];
 		else
@@ -53,6 +54,7 @@ class AddContributorCommand
 			$status = $params['status'];
 		else
 			$status = 'unassigned';
+
 		
 		//lets check contributor data for duplicates before storing
 		$this->storage->storeContributor( $name, $location, $status );

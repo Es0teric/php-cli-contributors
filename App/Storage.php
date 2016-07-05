@@ -53,7 +53,7 @@ class Storage {
 
 					//store duplicate array key index inside of this var
 					$dupeArrayIndexes[] = $key;
-					$this->output->error('Uh oh, the contributor ' . $item['name'] . ' already exists!');
+					$this->output->warning('Uh oh, the contributor ' . $item['name'] . ' already exists!');
 				
 				} else {
 
@@ -107,7 +107,7 @@ class Storage {
 			if( $fileSave === false ) 
 				$this->output->error( 'Uh oh!! The file failed to save.. please check file permissions' );
 			elseif( $update === false )
-				$this->output->info("-- contributor " . $lastItem['name'] . " added!");
+				$this->output->info("-- Contributor " . $lastItem['name'] . " added!");
 			
 
 		}
@@ -221,16 +221,70 @@ class Storage {
 	 * Changes status of contributor to "assigned" in data array when contributor name is provided
 	 * 
 	 * @param  string $name contributor's name to be assigned
-	 * @return boolean                  [description]
+	 * @return void
 	 */
-	public function assignContributor( $name ) { }
+	public function assignContributor( $name ) {
+
+		$list = $this->listContributors( true );
+
+		foreach( $list as $key => $item ) {
+
+			if( $item['name'] == $name ) {
+
+				if( $item['status'] !== 'assigned' ) {
+
+					$item['status'] = 'assigned';
+					$this->output->info( '-- The contributor ' . $name . ' has been updated!' );
+
+				} else {
+
+					$this->output->warning( '-- The contributor ' . $name . ' is already assigned.' ); 
+
+				}
+
+			}
+
+			$updatedArray[] = $item;
+
+		}
+
+		$this->writeDataToFile( $updatedArray, true );
+		
+	}
 
 	/**
 	 * Changes status of contributor to "unassigned" in data array when contributor name is provided
 	 * 
 	 * @param  string $name  contributor name to be unassigned
-	 * @return boolean       [description]
+	 * @return void
 	 */
-	public function unassignContributor( $name ) { }
+	public function unassignContributor( $name ) {
+
+		$list = $this->listContributors( true );
+
+		foreach( $list as $key => $item ) {
+
+			if( $item['name'] == $name ) {
+
+				if( $item['status'] !== 'unassigned' ) {
+
+					$item['status'] = 'unassigned';
+					$this->output->info( '-- The contributor ' . $name . ' has been updated!' );
+
+				} else {
+
+					$this->output->warning( '-- The contributor ' . $name . ' is already unassigned.' ); 
+
+				}
+
+			}
+
+			$updatedArray[] = $item;
+
+		}
+
+		$this->writeDataToFile( $updatedArray, true );
+
+	}
 
 }
