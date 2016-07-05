@@ -174,20 +174,41 @@ class Storage {
 	/**
 	 * Returns list of contributors from data array
 	 * 
-	 * @return array data array containing list of contributors
+	 * @param  boolean 	$returnArray  returns array list representation and not terminal output if true for unit testing
+	 * @return array 				  data array containing list of contributors to return if $returnArray is set
 	 */
-	public function listContributors() {
+	public function listContributors( $returnArray = false ) {
 
 		//lets read the data file
 		$data = $this->readDataFile();
 
 		//lets check if the data file contains items
-		if( !empty( $data ) || file_exists( __DIR__ . '/data.json' ) )
-			return $data;
-		else
+		if( !empty( $data ) ) {
+
+			//lets see if returnArray is set so we can either return a list of contributors or its array
+			//representation
+			if( $returnArray == false ) {
+				
+				//now we output the contributors
+				foreach( $data as $item ) {
+					$this->output->info('-- ' . $item['name'] . ' (' . $item['location'] . ', ' . $item['status'] . ') ');
+				}
+
+			} else {
+
+				//return array for unit testing
+				return $data;
+
+			}
+
+		} else {
+
 			$this->output->error('Oh no... Either the file doesnt exist or it exists, but its empty');
+			
+		}
 
 	}
+
 
 	/**
 	 * Removes contributor data from data array

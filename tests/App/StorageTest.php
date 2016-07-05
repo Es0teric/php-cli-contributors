@@ -54,7 +54,7 @@ class StorageTest extends PHPUnit_Framework_TestCase
 	 * 
 	 * @return void
 	 */
-	public function test_storage_store_contributor() {
+	/*public function test_storage_store_contributor() {
 
 		//loop through add contributor input
 		foreach( $this->sendInputAddContributorUsingArray() as $input ) {
@@ -69,34 +69,22 @@ class StorageTest extends PHPUnit_Framework_TestCase
 			if( array_key_exists( 'location', $paramArray ) )
 				$location = $paramArray['location'];
 			else
-				$location = false;
+				$location = 'Not Provided';
 
 			if( array_key_exists( 'status', $paramArray ) )
 				$status = $paramArray['status'];
 			else
-				$status = false;
+				$status = 'unassigned';
 
 			//store add_contributor input data
 			$contributor = $this->storage->storeContributor( $name, $location, $status );
 
 		}
 
-
-
 		//now we check the the size of the array to make sure the data saved
-		$this->assertGreaterThan( 0, sizeof( $this->storage->listContributors() ) );
+		$this->assertGreaterThan( 1, sizeof( $this->storage->listContributors(true) ) );
 
-	}
-
-	public function test_datajson_was_created() {
-
-		//$data = $this->helper->parseCliInput( $this->sendInputAddContributor() );
-
-		file_put_contents( './App/data.json', []);
-
-		$this->assertFileExists( './App/data.json' );
-
-	}
+	}*/
 
 
 

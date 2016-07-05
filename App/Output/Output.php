@@ -10,7 +10,7 @@ class Output
 	 * @return string       formatted text to output in the terminal
 	 */
 	public function error( $text ) {
-		print "\r\n\033[1;31m $text \033[0m\n";
+		print "\r\n\033[1;31m $text \033[0m\r\n";
 	}
 
 	/**
@@ -20,7 +20,7 @@ class Output
 	 * @return string       formatted text to output in the terminal
 	 */
 	public function info( $text ) {
-		print "\r\n\033[0;32m $text \033[0m\n";
+		print "\r\n\033[0;32m $text \033[0m\r\n";
 	}
 	
 

@@ -33,18 +33,20 @@ class Application {
             $inputs = $this->parse($input);
 
             //lets detect if the user wants to quit 
-            if( trim( $inputs[0] ) == 'quit' ) {
+            if( trim( $inputs[0] ) == 'quit' || trim( $inputs[0] ) == 'exit' ) {
                 $this->open = $this->session->destroy();
             }
 
-            $this->handle($input);
+            $this->handle( $input );
             
         }
     }
 
     public function parse($input) {
+
         // general validate
         return explode(" ", $input);
+        
     }
 
     public function handle($input) {

@@ -46,12 +46,13 @@ class AddContributorCommand
 		if( array_key_exists( 'location', $params ) )
 			$location = $params['location'];
 		else
-			$location = false;
+			$location = 'Not provided';
 
+		//if status is not created, defaults to unassigned
 		if( array_key_exists( 'status', $params ) )
 			$status = $params['status'];
 		else
-			$status = false;
+			$status = 'unassigned';
 		
 		//lets check contributor data for duplicates before storing
 		$this->storage->storeContributor( $name, $location, $status );
