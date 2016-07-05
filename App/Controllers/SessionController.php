@@ -25,6 +25,7 @@ class SessionController
 
     	$this->output->info('-- Goodbye!');
     	$this->storage->removeDataFile();
+    	exit();
 
     }
 }

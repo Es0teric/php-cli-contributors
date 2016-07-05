@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php namespace App;
 
 require dirname( __DIR__ ) . '/vendor/autoload.php'; //includes autoloader, so lets go up one level in the tree
@@ -19,14 +18,14 @@ class Application
     
     assign_contributor "<name>" - mark a contributor as being assigned.
     
-    unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" on a line by itself when you\'re done.
+    unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" or "exit" on a line by itself when you\'re done.
 
 ';
 
     public $open = true;
 
     public function __construct() {
-        
+
         //need to make storage (single instance) like a service and accessible from the controllers (ioc)
         $this->router = new Router();
 
