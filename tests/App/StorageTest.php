@@ -59,7 +59,7 @@ class StorageTest extends PHPUnit_Framework_TestCase
 	 * 
 	 * @return void
 	 */
-	public function test_storage_store_contributor() {
+	/*public function test_storage_store_contributor() {
 
 		//loop through add contributor input
 		foreach( $this->sendInputAddContributorUsingArray() as $input ) {
@@ -89,6 +89,6 @@ class StorageTest extends PHPUnit_Framework_TestCase
 		//now we check the the size of the array to make sure the data saved
 		$this->assertGreaterThan( 1, sizeof( $this->storage->listContributors( true ) ) );
 
-	}
+	}*/
 
 }

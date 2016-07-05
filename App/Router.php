@@ -4,16 +4,20 @@ use App\Controllers\SessionController;
 use App\Command\AddContributorCommand as AddContributor;
 use App\Command\ShowAllContributorsCommand as ShowAllContributors;
 use App\Command\DeleteContributorCommand as DeleteContributor;
+use App\Command\ShowByLocationCommand as ShowByLocation;
+use App\Output\Output;
 
 
 class Router {
 
     public function __construct() {
 
+        $this->output = new Output();
         $this->addContributor = new AddContributor();
         $this->showAllContributors = new ShowAllContributors();
         $this->deleteContributor = new DeleteContributor();
-        
+        $this->showByLocation = new ShowByLocation();
+
     }
 
     public function run( $input ) {
@@ -26,8 +30,10 @@ class Router {
         $explodedInput = explode( " ", trim( $input ) );
 
         //lets check for the add_contributor command
-        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'add_contributor' )
+        if( array_key_exists( '0', $explodedInput ) )
             $this->addContributor->run( trim( $input ) );
+        else
+            $this->output->error( '-- Please insert a contributor to add' );
 
         //lets check for the show_all command
         if( trim( $input ) == 'show_all' )
@@ -37,18 +43,17 @@ class Router {
             $this->showAllContributors->run( $explodedInput );
 
         //lets check for the del_contributor command
-        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'del_contributor' )
+        if( array_key_exists( '0', $explodedInput ) )
             $this->deleteContributor->run( trim( $input ) );
+        else
+            $this->output->error( '-- Please insert a contributor to remove' );
 
-
-        //parse out controller
-        //$this->parseRequest($input)
-    }
-
-    public function parseRequest($input) {
-        //$this->routes = $input; //parse out controller
-        //$this->routes;
-        //$this->request = new Request(); //parse out data that is not controller
+        //lets check for the show_by_location command
+        if( array_key_exists( '0', $explodedInput ) )
+            $this->showByLocation->run( trim( $input ) );
+        else
+            $this->output->error( '-- Please insert a location to search by' );
+        
     }
 
 }

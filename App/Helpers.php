@@ -12,7 +12,7 @@ class Helpers
 	public function parseForStorage( $input ) {
 
 		//regex to parse input for params
-		preg_match_all('/--(?P<opt>.*?)=(?P<value>".*?")/', $input, $m);
+		preg_match_all( '/--(?P<opt>.*?)=(?P<value>".*?")/', $input, $m );
 
 		//parse input for multiple array key values
 		if( is_array( $m['opt'] ) && !empty( $m['opt'] ) ) {
