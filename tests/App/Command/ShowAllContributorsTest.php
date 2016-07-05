@@ -22,6 +22,13 @@ class ShowAllContributorsTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	public function sendInputForLocationSort() {
+
+		$input = "show_all sort_location";
+		return $input;
+
+	}
+
 	/**
 	 * Asserts that arrays were properly sorted
 	 * 
@@ -32,13 +39,27 @@ class ShowAllContributorsTest extends PHPUnit_Framework_TestCase
 		$input = explode( " ", $this->sendInputForAlphaSort() );
 
 		$contributorsNotSorted = $this->storage->listContributors( true );
-		$contributorsSorted = $this->showAllContributors->handle( $input, true );
+		$contributorsSorted = $this->showAllContributors->run( $input, true );
 		
 		$this->assertFalse( json_encode( $contributorsNotSorted ) === json_encode( $contributorsSorted ) ); 
 
 	}
 
-	
 
+	/**
+	 * Asserts that arrays were properly sorted by location
+	 * 
+	 * @return void
+	 */
+	public function test_input_sort_location() {
+
+		$input = explode( " ", $this->sendInputForLocationSort() );
+
+		$contributorsNotSorted = $this->storage->listContributors( true );
+		$contributorsSorted = $this->showAllContributors->run( $input, true );
+		
+		$this->assertFalse( json_encode( $contributorsNotSorted ) === json_encode( $contributorsSorted ) ); 
+
+	}
 
 }

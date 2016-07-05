@@ -9,7 +9,20 @@ use App\Router;
 class Application 
 {
 
-    public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\r\n\r\n";
+    public $welcome = '
+    Welcome to the contributor store.  Available commands are:
+    add_contributor "<name>", "<location>", "<status>" - add a new contributor, status optional ("assigned" or "unassigned", defaults to "unassigned").
+    
+    add_contributor can also work like this: add_contributor --name="<name>" --location="<location>" --status="<status>"
+    
+    del_contributor "<name>" - remove a contributor.
+    
+    assign_contributor "<name>" - mark a contributor as being assigned.
+    
+    unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" on a line by itself when you\'re done.
+
+';
+
     public $open = true;
 
     public function __construct() {
@@ -50,7 +63,7 @@ class Application
     }
 
     public function handle($input) {
-        $this->router->handle( trim( $input ) );
+        $this->router->run( trim( $input ) );
     }
 }
 

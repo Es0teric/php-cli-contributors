@@ -32,11 +32,6 @@ class ShowAllContributorsCommand
 	 * @return array   $contributors returns when unit test needs a list of arrays instead of terminal output
 	 */
 	protected function handle( $input, $sortCheck = false ) {
-
-		/**
-		 * @todo: sort_location should sort locations by alphabetical order
-		 * @todo: sort_status should sort all assigned users first then unassigned users
-		 */
 		
 		//lets save the initial list of contributors
 		$contributors = $this->storage->listContributors( true );
@@ -83,7 +78,26 @@ class ShowAllContributorsCommand
 
 				case "sort_location":
 
-					//usort()
+					$locationSort = usort( $contributors, function( $a, $b ) {
+						 return strcmp( $a["location"], $b["location"] );
+					});
+
+					if( $locationSort == true ) {
+
+						if( $sortCheck == false ) {
+
+							foreach( $contributors as $item ) {
+								$this->output->info( '-- ' . $item['name'] . ' (' . $item['location'] . ', ' . $item['status'] . ')' );
+							}
+
+						} else {
+
+							//returns list of array of contributors
+							return $contributors;
+
+						}
+
+					}
 				
 				break;
 
