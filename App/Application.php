@@ -6,7 +6,8 @@ require dirname( __DIR__ ) . '/vendor/autoload.php'; //includes autoloader, so l
 use App\Controllers\SessionController;
 use App\Router;
 
-class Application {
+class Application 
+{
 
     public $welcome = "Type your message. Type 'quit' on a line by itself when you're done.\r\n\r\n";
     public $open = true;

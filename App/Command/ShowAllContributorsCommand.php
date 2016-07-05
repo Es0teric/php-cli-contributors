@@ -4,7 +4,8 @@ use App\Helpers;
 use App\Storage;
 use App\Output\Output;
 
-class ShowAllContributorsCommand {
+class ShowAllContributorsCommand 
+{
 
 	public $name = "Show All Contributors";
 	public $description = "show all extant contributors sorted by optional criteria.";

@@ -9,7 +9,8 @@
 use App\Helpers;
 use App\Output\Output;
 
-class Storage {
+class Storage 
+{
 	
     protected $data = [];
     public $file = [];

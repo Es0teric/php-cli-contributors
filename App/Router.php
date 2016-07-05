@@ -7,10 +7,12 @@ use App\Command\DeleteContributorCommand as DeleteContributor;
 use App\Command\ShowByLocationCommand as ShowByLocation;
 use App\Command\ShowByStatusCommand as ShowByStatus;
 use App\Command\AssignContributorCommand as AssignContributor;
+use App\Command\UnassignContributorCommand as UnassignContributor;
 use App\Output\Output;
 
 
-class Router {
+class Router 
+{
 
     public function __construct() {
 
@@ -21,6 +23,7 @@ class Router {
         $this->showByLocation = new ShowByLocation();
         $this->showByStatus = new ShowByStatus();
         $this->assignContributor = new AssignContributor();
+        $this->unassignContributor = new UnassignContributor();
 
     }
 
@@ -59,6 +62,10 @@ class Router {
         //lets check for the assign_contributor command
         if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'assign_contributor' )
             $this->assignContributor->run( trim( $input ) );
+
+        //lets check for the unassign_contributor command
+        if( array_key_exists( '0', $explodedInput ) && $explodedInput[0] == 'unassign_contributor' )
+            $this->unassignContributor->run( trim( $input ) );
         
     }
 
