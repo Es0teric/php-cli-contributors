@@ -7,7 +7,7 @@
  */
 
 use App\Helpers;
-use App\Output\Output;
+use App\Output;
 
 class Storage 
 {

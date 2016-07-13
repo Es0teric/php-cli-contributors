@@ -1,7 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Storage;
-use App\Output\Output;
+use App\Output;
 
 class SessionController 
 {
