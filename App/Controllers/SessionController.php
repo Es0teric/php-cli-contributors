@@ -1,7 +1,7 @@
-<?php namespace App\Controllers;
+<?php
 
-use App\Storage;
-use App\Output;
+require_once( dirname( __DIR__ ) . '/Output.php' );
+require_once( dirname( __DIR__ ) . '/Storage.php' );
 
 class SessionController 
 {

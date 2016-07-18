@@ -1,14 +1,14 @@
-<?php namespace App;
+<?php
 
-use App\Controllers\SessionController;
-use App\Command\AddContributorCommand as AddContributor;
-use App\Command\ShowAllContributorsCommand as ShowAllContributors;
-use App\Command\DeleteContributorCommand as DeleteContributor;
-use App\Command\ShowByLocationCommand as ShowByLocation;
-use App\Command\ShowByStatusCommand as ShowByStatus;
-use App\Command\AssignContributorCommand as AssignContributor;
-use App\Command\UnassignContributorCommand as UnassignContributor;
-use App\Output;
+require_once( __DIR__ . '/Controllers/SessionController.php' );
+require_once( __DIR__ . '/Command/AddContributorCommand.php' );
+require_once( __DIR__ . '/Command/ShowAllContributorsCommand.php' );
+require_once( __DIR__ . '/Command/DeleteContributorCommand.php' );
+require_once( __DIR__ . '/Command/ShowByLocationCommand.php' );
+require_once( __DIR__ . '/Command/ShowByStatusCommand.php' );
+require_once( __DIR__ . '/Command/AssignContributorCommand.php' );
+require_once( __DIR__ . '/Command/UnassignContributorCommand.php' );
+require_once( __DIR__ . '/Output.php' );
 
 
 class Router 
@@ -17,13 +17,13 @@ class Router
     public function __construct() {
 
         $this->output = new Output();
-        $this->addContributor = new AddContributor();
-        $this->showAllContributors = new ShowAllContributors();
-        $this->deleteContributor = new DeleteContributor();
-        $this->showByLocation = new ShowByLocation();
-        $this->showByStatus = new ShowByStatus();
-        $this->assignContributor = new AssignContributor();
-        $this->unassignContributor = new UnassignContributor();
+        $this->addContributor = new AddContributorCommand();
+        $this->showAllContributors = new ShowAllContributorsCommand();
+        $this->deleteContributor = new DeleteContributorCommand();
+        $this->showByLocation = new ShowByLocationCommand();
+        $this->showByStatus = new ShowByStatusCommand();
+        $this->assignContributor = new AssignContributorCommand();
+        $this->unassignContributor = new UnassignContributorCommand();
 
     }
 

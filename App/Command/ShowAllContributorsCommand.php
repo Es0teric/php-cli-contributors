@@ -1,8 +1,8 @@
-<?php namespace App\Command;
+<?php
 
-use App\Helpers;
-use App\Storage;
-use App\Output;
+require_once( dirname( __DIR__ ) . '/Helpers.php' );
+require_once( dirname( __DIR__ ) . '/Storage.php' );
+require_once( dirname( __DIR__ ) . '/Output.php' );
 
 class ShowAllContributorsCommand 
 {

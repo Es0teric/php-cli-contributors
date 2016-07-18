@@ -1,13 +1,12 @@
-<?php namespace App;
-
+<?php
 
 /** 
  * Output folder is also known as "view" folder
  * once any of these return true, then call output file and output text accordingly
  */
 
-use App\Helpers;
-use App\Output;
+require_once( __DIR__ . '/Output.php' );
+require_once( __DIR__ . '/Helpers.php' );
 
 class Storage 
 {
