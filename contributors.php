@@ -1,15 +1,13 @@
 #!/usr/bin/env php
 <?php
 
-use App\Application;
+require_once( __DIR__ . '/App/Application.php');
+
 
 class Contributors 
 {
 
     public function init() {
-
-    	//lets include the app namespace in this
-    	spl_autoload_register();
 
         //lets init the application and begin
         $app = new Application();

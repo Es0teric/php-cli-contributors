@@ -1,12 +1,10 @@
-<?php namespace App;
+<?php
 
 session_start();
 
-require dirname( __DIR__ ) . '/vendor/autoload.php'; //includes autoloader, so lets go up one level in the tree
-
-use App\Controllers\SessionController;
-use App\Router;
-use App\Output;
+require_once( __DIR__ . '/Controllers/SessionController.php' );
+require_once( __DIR__ . '/Router.php' );
+require_once( __DIR__ . '/Output.php' );
 
 class Application 
 {
