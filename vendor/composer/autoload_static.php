@@ -17,7 +17,6 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         ),
         'A' => 
         array (
-            'App\\Output\\' => 11,
             'App\\Controllers\\' => 16,
             'App\\Command\\' => 12,
             'App\\' => 4,
@@ -33,10 +32,6 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
-        'App\\Output\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/App/Output',
-        ),
         'App\\Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/App/Controllers',
@@ -48,16 +43,6 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/App',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'o' => 
-        array (
-            'org\\bovigo\\vfs\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/mikey179/vfsStream/src/main/php',
-            ),
         ),
     );
 
@@ -415,7 +400,6 @@ class ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit1a6fcaa10761f55e9ab9c0bf839faa74::$classMap;
 
         }, null, ClassLoader::class);

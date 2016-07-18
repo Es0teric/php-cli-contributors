@@ -2,7 +2,7 @@
 
 use App\Storage;
 use App\Helpers;
-use App\Output\Output;
+use App\Output;
 
 class AssignContributorCommand 
 {
@@ -28,29 +28,33 @@ class AssignContributorCommand
 
 		$parsedInput = $this->parse( $input );
 
-		$contributors = $this->storage->listContributors( true );
+		if( $parsedInput['name'] !== 'assign_contributor' ) {
 
-		if( !empty( $contributors ) ) {
+			$contributors = $this->storage->listContributors( true );
 
-			$foundContributor = [];
+			if( !empty( $contributors ) ) {
 
-			foreach( $contributors as $contributor ) {
+				$foundContributor = [];
 
-				if( $contributor['name'] == $parsedInput['name'] ) {
+				foreach( $contributors as $contributor ) {
 
-					$foundContributor[] = $contributor;
-					$this->storage->assignContributor( $parsedInput['name'] );
+					if( $contributor['name'] == $parsedInput['name'] ) {
+
+						$foundContributor[] = $contributor;
+						$this->storage->assignContributor( $parsedInput['name'] );
+
+					}
 
 				}
 
-			}
+				if( empty( $foundContributor ) )
+					$this->output->error( '-- There is no contributor with this name to assign.' );
 
-			if( empty( $foundContributor ) )
-				$this->output->error( '-- There is no contributor with this name to assign.' );
+			}
 
 		} else {
 
-			$this->output->error( '-- There are no contributors to assign yet.' );
+			$this->output->error("-- A name is required to assign a contributor. \r\n");
 
 		}
 

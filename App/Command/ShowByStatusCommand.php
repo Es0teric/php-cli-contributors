@@ -2,7 +2,7 @@
 
 use App\Storage;
 use App\Helpers;
-use App\Output\Output;
+use App\Output;
 
 class ShowByStatusCommand 
 {
@@ -30,30 +30,34 @@ class ShowByStatusCommand
 		$contributors = $this->storage->listContributors(true);
 		$parsed = $this->parse( $input );
 
-		if( !empty( $contributors ) ) {
+		if( $parsed['status'] !== 'show_by_status' ) {
 
-			$foundStatuses = [];
+			if( !empty( $contributors ) ) {
 
-			//loop through contributors 
-			foreach( $contributors as $key => $contributor ) {
+				$foundStatuses = [];
 
-				if( $contributor['status'] == $parsed['status'] ) {
+				//loop through contributors 
+				foreach( $contributors as $key => $contributor ) {
 
-					//store matching statuses from input
-					$foundStatuses[] = $contributor;
-					$this->output->info( '-- ' . $contributor['name'] . ' (' . $contributor['location'] . ')' );
-				
+					if( $contributor['status'] == $parsed['status'] ) {
+
+						//store matching statuses from input
+						$foundStatuses[] = $contributor;
+						$this->output->info( '-- ' . $contributor['name'] . ' (' . $contributor['location'] . ')' );
+					
+					}
+
 				}
+
+				//output error if the status doesnt exist
+				if( empty( $foundStatuses ) )
+					$this->output->error( '-- There are no contributors with the status of ' . $parsed['status'] );
 
 			}
 
-			//output error if the status doesnt exist
-			if( empty( $foundStatuses ) )
-				$this->output->error( '-- There are no contributors with the status of ' . $parsed['status'] );
-
 		} else {
 
-			$this->output->error( '-- There are no contributors to display by status' );
+			$this->output->error( "-- A status of assigned or unassigned is required.\r\n" );
 
 		}
 

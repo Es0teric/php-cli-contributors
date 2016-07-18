@@ -2,6 +2,7 @@
 
 use App\Helpers;
 use App\Storage;
+use App\Output;
 
 class AddContributorCommand
 {
@@ -18,6 +19,9 @@ class AddContributorCommand
 
 		//init storage
 		$this->storage = new Storage();
+
+		//init output
+		$this->output = new Output();
 
 	}
 
@@ -37,27 +41,35 @@ class AddContributorCommand
 		//first, lets parse output from STDIN
 		$params = $this->parse( $input );
 
-		//then lets assign vars to contain each individual var from parsed input
-		if( array_key_exists( 'name', $params ) )
-			$name = $params['name'];
-		else
-			$name = false;
+		if( $params['name'] !== 'add_contributor' && $params['location'] !== 'Not provided' ) {
 
-		//defaults to not provided if its not specified
-		if( array_key_exists( 'location', $params ) )
-			$location = $params['location'];
-		else
-			$location = 'Not provided';
+			//then lets assign vars to contain each individual var from parsed input
+			if( array_key_exists( 'name', $params ) )
+				$name = $params['name'];
+			else
+				$name = false;
 
-		//if status is not created, defaults to unassigned
-		if( array_key_exists( 'status', $params ) )
-			$status = $params['status'];
-		else
-			$status = 'unassigned';
+			//defaults to not provided if its not specified
+			if( array_key_exists( 'location', $params ) )
+				$location = $params['location'];
+			else
+				$location = 'Not provided';
 
-		
-		//lets check contributor data for duplicates before storing
-		$this->storage->storeContributor( $name, $location, $status );
+			//if status is not created, defaults to unassigned
+			if( array_key_exists( 'status', $params ) )
+				$status = $params['status'];
+			else
+				$status = 'unassigned';
+
+			
+			//lets check contributor data for duplicates before storing
+			$this->storage->storeContributor( $name, $location, $status );
+
+		} else {
+
+			$this->output->error( "-- A name and location is required!\r\n" );
+
+		}
 
 	}
 

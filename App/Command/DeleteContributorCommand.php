@@ -2,7 +2,7 @@
 
 use App\Storage;
 use App\Helpers;
-use App\Output\Output;
+use App\Output;
 
 class DeleteContributorCommand 
 {
@@ -36,28 +36,32 @@ class DeleteContributorCommand
 		//lets parse the input first
 		$parsedInput = $this->parse( $input );
 
-		//now we grab the array list version of the contributors list
-		$contributors = $this->storage->listContributors( true );
+		if( $parsedInput['name'] !== 'del_contributor' ) {
 
-		//if its empty, we proceed.. if not, we spit an error back to the terminal
-		if( !empty( $contributors ) ) {
+			//now we grab the array list version of the contributors list
+			$contributors = $this->storage->listContributors( true );
 
-			$indexKey = '';
+			//if its empty, we proceed.. if not, we spit an error back to the terminal
+			if( !empty( $contributors ) ) {
 
-			foreach( $contributors as $key => $contributor ) {
+				$indexKey = '';
 
-				//we then grab the array key of the name that matches the input so we can unset it
-				if( $contributor['name'] == $parsedInput['name'] )
-					$indexKey = $key;
+				foreach( $contributors as $key => $contributor ) {
+
+					//we then grab the array key of the name that matches the input so we can unset it
+					if( $contributor['name'] == $parsedInput['name'] )
+						$indexKey = $key;
+
+				}
+
+				//and remove contributor in the storage class now processes it
+				$this->storage->removeContributor( $indexKey );
 
 			}
 
-			//and remove contributor in the storage class now processes it
-			$this->storage->removeContributor( $indexKey );
-
 		} else {
 
-			$this->output->error( '-- Uh Oh! there are no contributors to remove!' );
+			$this->output->error( "-- A name is required to delete a contributor.\r\n" );
 
 		}
 

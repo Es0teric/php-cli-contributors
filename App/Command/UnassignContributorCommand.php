@@ -2,7 +2,7 @@
 
 use App\Storage;
 use App\Helpers;
-use App\Output\Output;
+use App\Output;
 
 class UnassignContributorCommand 
 {
@@ -30,27 +30,31 @@ class UnassignContributorCommand
 
 		$contributors = $this->storage->listContributors( true );
 
-		if( !empty( $contributors ) ) {
+		if( $parsedInput['name'] !== 'unassign_contributor' ) {
 
-			$foundContributor = [];
+			if( !empty( $contributors ) ) {
 
-			foreach( $contributors as $contributor ) {
+				$foundContributor = [];
 
-				if( $contributor['name'] == $parsedInput['name'] ) {
+				foreach( $contributors as $contributor ) {
 
-					$foundContributor[] = $contributor;
-					$this->storage->unassignContributor( $parsedInput['name'] );
+					if( $contributor['name'] == $parsedInput['name'] ) {
+
+						$foundContributor[] = $contributor;
+						$this->storage->unassignContributor( $parsedInput['name'] );
+
+					}
 
 				}
 
+				if( empty( $foundContributor ) )
+					$this->output->error( '-- There is no contributor with this name to unassign.' );
+
 			}
-
-			if( empty( $foundContributor ) )
-				$this->output->error( '-- There is no contributor with this name to unassign.' );
-
+		
 		} else {
 
-			$this->output->error( '-- There are no contributors to unassign yet.' );
+			$this->output->error( "-- A contributor name is required. \r\n" );
 
 		}
 

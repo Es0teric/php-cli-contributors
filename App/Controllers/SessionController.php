@@ -1,7 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Storage;
-use App\Output\Output;
+use App\Output;
 
 class SessionController 
 {
@@ -24,7 +24,7 @@ class SessionController
     public function destroy() {
 
     	$this->output->info('-- Goodbye!');
-    	$this->storage->removeDataFile();
+    	session_destroy();
     	exit();
 
     }
