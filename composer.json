@@ -4,7 +4,8 @@
 		"email": "leo.fulgencio@gmail.com"
 	},
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "fzaninotto/faker": "^1.6"
     },
     "autoload": {
     	"psr-4":  {
@@ -12,9 +13,6 @@
     		"App\\Command\\": "App/Command",
     		"App\\Controllers\\": "App/Controllers"
     	}
-    },
-	"require": {
-		"fzaninotto/faker": "^1.6",
-		"mikey179/vfsStream": "^1.6"
-	}
+    }
+
 }

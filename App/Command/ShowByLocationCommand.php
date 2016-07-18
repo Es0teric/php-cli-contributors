@@ -29,33 +29,37 @@ class ShowByLocationCommand
 		$contributors = $this->storage->listContributors(true);
 		$parsed = $this->parse( $input );
 
-		//lets check if contributors array is empty
-		if( !empty( $contributors ) ) {
+		if( $parsed['location'] !== 'show_by_location' ) {
 
-			$foundLocations = [];
+			//lets check if contributors array is empty
+			if( !empty( $contributors ) ) {
 
-			//lets loop through that list of contributors to get matching results of locations
-			foreach( $contributors as $key => $contributor ) {
+				$foundLocations = [];
 
-				if( $contributor['location'] == $parsed['location'] ) {
+				//lets loop through that list of contributors to get matching results of locations
+				foreach( $contributors as $key => $contributor ) {
 
-					//lets store the locations that were found in this array in case we want to return it
-					$foundLocations[] = $contributor;
+					if( $contributor['location'] == $parsed['location'] ) {
 
-					//output for found contributors matching the location
-					$this->output->info( '-- ' . $contributor['name'] . ' (' . $contributor['status'] . ')' );
-				
+						//lets store the locations that were found in this array in case we want to return it
+						$foundLocations[] = $contributor;
+
+						//output for found contributors matching the location
+						$this->output->info( '-- ' . $contributor['name'] . ' (' . $contributor['status'] . ')' );
+					
+					}
+
 				}
+
+				//nothing was found
+				if( empty( $foundLocations ) )
+					$this->output->error( '-- There are no contributors with the location of ' . $parsed['location'] );
 
 			}
 
-			//nothing was found
-			if( empty( $foundLocations ) )
-				$this->output->error( '-- There are no contributors with the location of ' . $parsed['location'] );
-
 		} else {
 
-			$this->output->error( '-- There are no contributors to display by location' );
+			$this->output->error( "-- A location name is required.\r\n" );
 
 		}
 

@@ -41,7 +41,7 @@ class AddContributorCommand
 		//first, lets parse output from STDIN
 		$params = $this->parse( $input );
 
-		if( $params['name'] !== 'add_contributor' && $params['location'] !== 'Not Provided' ) {
+		if( $params['name'] !== 'add_contributor' && $params['location'] !== 'Not provided' ) {
 
 			//then lets assign vars to contain each individual var from parsed input
 			if( array_key_exists( 'name', $params ) )
@@ -67,7 +67,7 @@ class AddContributorCommand
 
 		} else {
 
-			$this->output->error( '-- A name and location is required' );
+			$this->output->error( "-- A name and location is required!\r\n" );
 
 		}
 

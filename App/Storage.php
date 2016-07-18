@@ -13,7 +13,7 @@ class Storage
 {
 	
     protected $data = [];
-    public $file = [];
+    public $session = [];
 
     public function __construct() {
 
@@ -34,7 +34,7 @@ class Storage
 	public function storeContributor( $name, $location, $status ) {
 
 		//retrieve current data array from json file
-		$file = $this->readDataFile();
+		$session = $this->readSessionData();
 
 		//store current input into this array
 		$original[] = [
@@ -44,10 +44,10 @@ class Storage
 		];
 
 		//lets check if the data.json file is empty
-		if( !empty( $file ) ) {
+		if( !empty( $session ) ) {
 
 			//now we loop through each array to make sure that there is no duplicate data being added
-			foreach( $file as $key => $item ) {
+			foreach( $session as $key => $item ) {
 
 				//check against the name of the array list and the name thats being passed in
 				if( $item['name'] == $name ) {
@@ -69,7 +69,7 @@ class Storage
 			$merged = array_merge( $cleanedArray, $original );
 
 			//lets write to the data file
-			$this->writeDataToFile( $merged );
+			$this->writeDataToSession( $merged );
 
 			//return the merged data
 			return $merged;
@@ -77,7 +77,7 @@ class Storage
 		} else {
 
 			//we are going to be writing new data now
-			$this->writeDataToFile( $original);
+			$this->writeDataToSession( $original);
 			return $original;
 		}
 
@@ -85,28 +85,28 @@ class Storage
 	}
 
 	/**
-	 * Writes current data in terminal session to json file
+	 * Writes current data in terminal session to global session variable
 	 * 
 	 * @param  array 	$data   data to save
 	 * @param  boolean  $update if false, the user is not removing an array key to update the data
 	 * @return void
 	 */
-	public function writeDataToFile( $data, $update = false ) {
+	public function writeDataToSession( $data, $update = false ) {
 
 		if( !empty( $data ) ) {
 
 			//store initial data array
-			$fileData = $data;
+			$sessionData = $data;
 
 			//lets pop the last item in the array so we can notify the user what was saved
 			$lastItem = array_pop( $data );
 
-			//lets save the data into the json file
-			$fileSave = file_put_contents( __DIR__ . '/data.json', json_encode( $fileData ) );
-			
-			//lets check if the file saves correctly before outputting a success message
-			if( $fileSave === false ) 
-				$this->output->error( 'Uh oh!! The file failed to save.. please check file permissions' );
+			//lets save the data to the session
+			$_SESSION = $sessionData;
+
+			//lets check if the session saves correctly before outputting a success message
+			if( empty( $_SESSION ) ) 
+				$this->output->info( 'Uh oh!! The file failed to save.. please check file permissions' );
 			elseif( $update === false )
 				$this->output->info("-- Contributor " . $lastItem['name'] . " added!");
 			
@@ -115,35 +115,19 @@ class Storage
 
 	}
 
-	/**
-	 * Removes data file when terminal session is destroyed
-	 * 
-	 * @return void
-	 */
-	public function removeDataFile() {
-
-		if( file_exists( __DIR__ . '/data.json' ) )
-			unlink( __DIR__ . '/data.json' );
-
-	}
 
 	/**
-	 * Reads data.json file and returns the contents in a PHP array
+	 * Reads session data and returns the contents
 	 * 
 	 * @throws Exception when file does not exist or cannot be retrieved due to file permissions
 	 * @return array $data json decoded array of data
 	 */
-	public function readDataFile() {
+	public function readSessionData() {
 
-		if( file_exists( __DIR__ . '/data.json' ) ) {
+		if( !empty( $_SESSION ) ) {
 
-			$data = json_decode( file_get_contents( __DIR__ . '/data.json' ), true );
+			$data = $_SESSION;
 			return $data;
-
-		} else {
-
-			//$this->output->error('Uh oh! It seems that the data file doesnt exist, creating it now...');
-			file_put_contents( __DIR__ . '/data.json' , []);
 
 		}
 
@@ -158,7 +142,7 @@ class Storage
 	public function listContributors( $returnArray = false ) {
 
 		//lets read the data file
-		$data = $this->readDataFile();
+		$data = $this->readSessionData();
 
 		//lets check if the data file contains items
 		if( !empty( $data ) ) {
@@ -179,10 +163,6 @@ class Storage
 
 			}
 
-		} else {
-
-			$this->output->error('Oh no... there are no contributors to show yet... go ahead and add some');
-			
 		}
 
 	}
@@ -197,16 +177,16 @@ class Storage
 	public function removeContributor( $index ) {
 
 		//we need to grab the list of contributors that exist again
-		$file = $this->listContributors(true);
+		$session = $this->listContributors(true);
 
 		//then we check against the index to make sure that the contributor does infact, exist
-		if( array_key_exists( $index , $file ) ) {
+		if( array_key_exists( $index , $session ) ) {
 
 			//we then store the array inside of this so we can prompt the user that it was infact removed
-			$contributor = $file[$index];
+			$contributor = $session[$index];
 			
-			unset( $file[$index] );
-			$this->writeDataToFile( $file, true );
+			unset( $session[$index] );
+			$this->writeDataToSession( $session, true );
 			$this->output->info( '-- Contributor ' . $contributor['name'] . ' was removed!' );
 
 		} else {
@@ -249,7 +229,7 @@ class Storage
 
 		}
 
-		$this->writeDataToFile( $updatedArray, true );
+		$this->writeDataToSession( $updatedArray, true );
 		
 	}
 
@@ -284,7 +264,7 @@ class Storage
 
 		}
 
-		$this->writeDataToFile( $updatedArray, true );
+		$this->writeDataToSession( $updatedArray, true );
 
 	}
 

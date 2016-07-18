@@ -1,5 +1,7 @@
 <?php namespace App;
 
+session_start();
+
 require dirname( __DIR__ ) . '/vendor/autoload.php'; //includes autoloader, so lets go up one level in the tree
 
 use App\Controllers\SessionController;

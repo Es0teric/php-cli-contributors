@@ -42,7 +42,7 @@ class Output
 
 	return <<<EOT
 	Welcome to the contributor store.  Available commands are:
-    add_contributor "<name>", "<location>", "<status>" - add a new contributor, status optional ("assigned" or "unassigned", defaults to "unassigned").
+    add_contributor "<name>", "<location>", "<status>" - add a new contributor, status optional ("assigned" or "unassigned", defaults to "unassigned"). * name and location is required
     
     add_contributor can also work like this: add_contributor --name="<name>" --location="<location>" --status="<status>"
     
@@ -51,6 +51,12 @@ class Output
     assign_contributor "<name>" - mark a contributor as being assigned.
     
     unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" or "exit" on a line by itself when you're done.
+
+    show_all [sort_alpha|sort_location]- show all extant contributors sorted by optional criteria.
+
+	show_by_location "<location>" - show all extant contributors in a location.
+	
+	show_by_status "<status>" - show all extant contributors with the designated status.
 
 EOT;
 
