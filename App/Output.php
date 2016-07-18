@@ -50,7 +50,7 @@ class Output
     
     assign_contributor "<name>" - mark a contributor as being assigned.
     
-    unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" or "exit" on a line by itself when you\'re done.
+    unassign_contributor "<name>" - mark a contributor as being unassigned.. Type "quit" or "exit" on a line by itself when you're done.
 
 EOT;
 

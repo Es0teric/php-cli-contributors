@@ -28,6 +28,7 @@ class Application
     public function run() {
 
         print $this->output->welcome();
+        print "\r\n";
         
         while( $this->open ) {
 
